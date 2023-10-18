@@ -18,4 +18,4 @@ During the [Biomedical Linked Annotation Hackathon](https://blah8.linkedannotati
 4. **Evaluation**: we will evaluate the accuracy of our service, and compare it to existing services
 5. **Exploring use cases:** in addition to concept resolution, we will explore a range of potential use cases that can benefit from the vector database. These may include synonym discovery, concept mapping, and concept recommendation.
 
-The service will be exposed as an OpenAPI-described API that takes a concept label as input, and return a list of matching entities, represented by a dictionary with the score and their ID curie, label, synonyms.
+The name resolution service will be exposed as an OpenAPI-described API that takes a concept label as input, and return a list of matching entities, represented by a dictionary with the score and their ID curie, label, synonyms.
