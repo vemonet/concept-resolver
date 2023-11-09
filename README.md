@@ -12,7 +12,7 @@ We propose to explore the use of vector similarity search to improve the accurac
 
 During the [Biomedical Linked Annotation Hackathon](https://blah8.linkedannotation.org/), our key objectives are as follows:
 
-1. **Choosing a vector database**: we will evaluate the available open-source vector database to choose one that fits our needs. We might also choose multiple, and compare their results. 
+1. **Choosing a vector database and text embeddings model**: we will evaluate the available open-source vector database and text embeddings models to choose one that fits our needs. We might also choose multiple, and compare their results. 
 2. **Data ingestion:** we will establish a workflow to generate embeddings and ingest the data from the Translator Babel project into a vector database. This database will serve as the foundation for our name resolution service.
 3. **Vector similarity search:** we will implement a service that will enable users to retrieve potential identifiers for a given concept label, along with scores indicating the degree of confidence. This service will use the vector database similarity search implementation
 4. **Evaluation**: we will look into existing datasets to benchmark the efficiency of our approach, and compare it to existing services
@@ -20,15 +20,15 @@ During the [Biomedical Linked Annotation Hackathon](https://blah8.linkedannotati
 
 The name resolution service will be exposed as an OpenAPI-described API that takes a concept label as input, and return a list of matching entities, represented by a dictionary with the score and their ID curie, label, synonyms.
 
-### Vector database to investigate
+#### Vector databases 
 
-| Name                                                 | Creation     | GitHub stars | Written in | SDK for                | Query language/API* | Implement vector functions                                   | Comment                  |
-| ---------------------------------------------------- | ------------ | ------------ | ---------- | ---------------------- | ------------------- | ------------------------------------------------------------ | ------------------------ |
-| [**Qdrant**](https://github.com/qdrant/qdrant)       | July 2020    | ~14k         | Rust       | Python, JS             | OpenAPI             | [cosine, euclid, dot](https://qdrant.tech/documentation/concepts/search/#metrics) |                          |
-| [**Chroma**](https://github.com/chroma-core/chroma)  | October 2022 | ~9k          | Python     | Python, JS             | OpenAPI ❓️           |                                                              |                          |
-| [**Milvus**](https://github.com/milvus-io/milvus)    | October 2019 | ~24k         | Go         | Python, JS, Java, Go   | OpenAPI ❓️           | [cosine, euclid, inner product](https://milvus.io/docs/metric.md) | aka. zilliz cloud        |
-| [**Weaviate**](https://github.com/weaviate/weaviate) | March 2016   | ~8k          | Go         | Python, JS, Java, Go   | GraphQL API         | Not clear, [hidden](https://weaviate.io/developers/weaviate/search/similarity) under some abstraction layers |                          |
-| [**pgvector**](https://github.com/pgvector/pgvector) | April 2021   | ~6.5k        | C          | Through Postgres SDK ❓️ | SQL                 | [cosine, euclid, inner product, taxicab](https://github.com/pgvector/pgvector#vector-functions) | Integrated in PostgreSQL |
+| Name                                                 | Creation     | GitHub stars | Written in | SDK for                    | Query language/API* | Implement vector functions                                   | Comment                                                    |
+| ---------------------------------------------------- | ------------ | ------------ | ---------- | -------------------------- | ------------------- | ------------------------------------------------------------ | ---------------------------------------------------------- |
+| [**Qdrant**](https://github.com/qdrant/qdrant)       | July 2020    | ~14k         | Rust       | Python, JS, Rust, Go, .NET | OpenAPI, gRPC       | [cosine, euclid, dot](https://qdrant.tech/documentation/concepts/search/#metrics) | Can be used as local standalone tool without web service ❓️ |
+| [**Milvus**](https://github.com/milvus-io/milvus)    | October 2019 | ~24k         | Go         | Python, JS, Java, Go       | OpenAPI ❓️           | [cosine, euclid, inner product](https://milvus.io/docs/metric.md) | aka. Zilliz cloud                                          |
+| [**Chroma**](https://github.com/chroma-core/chroma)  | October 2022 | ~9k          | Python     | Python, JS                 | OpenAPI ❓️           |                                                              |                                                            |
+| [**Weaviate**](https://github.com/weaviate/weaviate) | March 2016   | ~8k          | Go         | Python, JS, Java, Go       | GraphQL API         | [cosine, euclid](https://weaviate.io/developers/weaviate/search/similarity) |                                                            |
+| [**pgvector**](https://github.com/pgvector/pgvector) | April 2021   | ~6.5k        | C          | Through Postgres SDK ❓️     | SQL                 | [cosine, euclid, inner product, taxicab](https://github.com/pgvector/pgvector#vector-functions) | Integrated in PostgreSQL                                   |
 
 *Query language/API specifies which type of query language or API can be used to query the information inside the vector database
 
@@ -36,7 +36,21 @@ All those products are Open Source, and they all propose a simple web UI to expl
 
 Most of them have a modern and simple API (apart from pgvector which lives within PostgreSQL)
 
-### Benchmark datasets
+#### Text embedding models
+
+Reference benchmark for text embeddings models: https://huggingface.co/blog/mteb
+
+Leaderboard: https://huggingface.co/spaces/mteb/leaderboard
+
+Popular embedding models:
+
+- FlagEmbedding `bge-large-en-v1.5`
+- OpenAI `text-embedding-ada-002`
+- HuggingFace `sentence-transformers/all-MiniLM-L6-v2`
+- Jina AI `jina-embeddings-v2-base-en`
+- Cohere `embed-english-v3.0`
+
+#### Benchmark dataset
 
 To be defined.
 
