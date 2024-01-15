@@ -1,0 +1,4 @@
+pandas
+fastembed
+qdrant-client
+tqdm

@@ -12,7 +12,7 @@ We propose to explore the use of vector similarity search to improve the accurac
 
 During the [Biomedical Linked Annotation Hackathon](https://blah8.linkedannotation.org/), our key objectives are as follows:
 
-1. **Choosing a vector database and text embeddings model**: we will evaluate the available open-source vector database and text embeddings models to choose one that fits our needs. We might also choose multiple, and compare their results. 
+1. **Choosing a vector database and text embeddings model**: we will evaluate the available open-source vector database and text embeddings models to choose one that fits our needs. We might also choose multiple, and compare their results.
 2. **Data ingestion:** we will establish a workflow to generate embeddings and ingest the data from the Translator Babel project into a vector database. This database will serve as the foundation for our name resolution service.
 3. **Vector similarity search:** we will implement a service that will enable users to retrieve potential identifiers for a given concept label, along with scores indicating the degree of confidence. This service will use the vector database similarity search implementation
 4. **Evaluation**: we will look into existing datasets to benchmark the efficiency of our approach, and compare it to existing services
@@ -20,7 +20,7 @@ During the [Biomedical Linked Annotation Hackathon](https://blah8.linkedannotati
 
 The name resolution service will be exposed as an OpenAPI-described API that takes a concept label as input, and return a list of matching entities, represented by a dictionary with the score and their ID curie, label, synonyms.
 
-#### Vector databases 
+#### Vector databases
 
 | Name                                                 | Creation     | GitHub stars | Written in | SDK for                    | Query language/API* | Implement vector functions                                   | Comment                                                      |
 | ---------------------------------------------------- | ------------ | ------------ | ---------- | -------------------------- | ------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -32,7 +32,7 @@ The name resolution service will be exposed as an OpenAPI-described API that tak
 
 *Query language/API specifies which type of query language or API can be used to query the information inside the vector database
 
-All those products are Open Source, and they all propose a simple web UI to explore the vector database. 
+All those products are Open Source, and they all propose a simple web UI to explore the vector database.
 
 Most of them have a modern and simple API (apart from pgvector which lives within PostgreSQL)
 
@@ -60,3 +60,40 @@ Existing benchmarks for Vector databases:
 - Article about benchmarks for vector databases: https://marketing.fmops.ai/blog/vector-benchmarking/
 - VectorDBBench from Milvus/Zilliz: https://github.com/zilliztech/VectorDBBench
 - Benchmark from Qdrant: https://qdrant.tech/benchmarks/
+
+
+##### Biomedical data Benchmark
+
+* BioWiC: An Evaluation Benchmark for Biomedical Concept Representation
+    * https://github.com/hrouhizadeh/BioWiC
+    * https://huggingface.co/datasets/hrouhizadeh/BioWiC
+
+
+##### Mapping issues in Name Resolution service
+
+* "Fluphenazine Decanoate Injectio, USP" should match `UMLS:C2355623` before `UMLS:C0573089` (overdose)
+* https://github.com/TranslatorSRI/NameResolution/issues/81
+    * "ischemic fasciitis"
+    * "ischemic disease"
+* "Rat"/"rats" does not return Rattus norwegicus high enough (https://github.com/TranslatorSRI/NameResolution/issues/127)
+* "Angiotensin II" should not match "angiotensin" in first (https://github.com/TranslatorSRI/NameResolution/issues/90)
+* "acp-044 dose a" timeout (https://github.com/TranslatorSRI/NameResolution/issues/95)
+* "long COVID-19" should not match "long" in first (https://github.com/TranslatorSRI/NameResolution/issues/72)
+* "depression" should match "depressive disorder" higher on the list
+* "diabetes type ..." hangs
+* "alzheimer" gives "Alzheimer Vaccines" before "Alzheimer disease"
+* "COAGULASE NEGATIVE STAPHYLOCOCCUS" hangs
+
+### Run the project
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Start services:
+
+```bash
+docker compose up -d
+```
