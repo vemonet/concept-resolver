@@ -97,3 +97,9 @@ Start services:
 ```bash
 docker compose up -d
 ```
+
+Run loading (automatically download synonyms if not present):
+
+```bash
+make load
+```

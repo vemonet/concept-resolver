@@ -30,12 +30,12 @@ flag_embeddings_size = 768
 # vectordb = QdrantClient(":memory:")
 # vectordb = QdrantClient(path="data/vectordb")
 vectordb = QdrantClient(
-    host="localhost",
+    host="qdrant",
     # prefer_grpc=True,
 )
 
 vectordb.recreate_collection(
-    collection_name="concept-resolver",
+    collection_name="flag-concept-resolver",
     vectors_config=VectorParams(size=flag_embeddings_size, distance=Distance.COSINE),
     # force_recreate=True,
 )
