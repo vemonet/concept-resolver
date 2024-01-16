@@ -10,8 +10,9 @@ services:
       # - ./scripts/qdrant_config.yml:/qdrant/config/production.yaml
     environment:
       - QDRANT_ALLOW_RECOVERY_MODE=true
-      - VIRTUAL_HOST=qdrant.findy-curie.137.120.31.148.nip.io
-      - LETSENCRYPT_HOST=qdrant.findy-curie.137.120.31.148.nip.io
+      # - VIRTUAL_HOST=qdrant.blah.137.120.31.148.nip.io
+      - VIRTUAL_HOST=qdrant.blah.137.120.31.102.nip.io
+      - LETSENCRYPT_HOST=qdrant.blah.137.120.31.102.nip.io
       - VIRTUAL_PORT=6333
     # ports:
     #   - 6333:6333
