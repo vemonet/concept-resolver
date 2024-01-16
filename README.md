@@ -103,3 +103,9 @@ Run loading (automatically download synonyms if not present):
 ```bash
 make load
 ```
+
+# PubDictionaries
+
+synonyms expansion: load all dictionaries in a vectordb
+
+For annotations: use embedding distance

@@ -2,3 +2,5 @@ pandas
 fastembed
 qdrant-client
 tqdm
+beautifulsoup4
+requests
