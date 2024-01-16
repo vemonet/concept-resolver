@@ -30,7 +30,8 @@ flag_embeddings_size = 768
 # vectordb = QdrantClient(":memory:")
 # vectordb = QdrantClient(path="data/vectordb")
 vectordb = QdrantClient(
-    host="qdrant",
+    url="https://qdrant.findy-curie.137.120.31.148.nip.io"
+    # host="qdrant",
     # prefer_grpc=True,
 )
 
@@ -44,39 +45,49 @@ vectordb.recreate_collection(
 synonym_dir = "data/synonyms"
 chunk_size = 1000
 
+points_count = 0
 for filename in os.listdir(synonym_dir):
     if filename.endswith(".txt"):
         # print(f"Loading {filename}")
         file_path = os.path.join(synonym_dir, filename)
         category = filename.replace('.txt', '')
 
-        points_count = 0
+        # {"curie": "UMLS:C4085944", "names": ["ATIR101", "allodepleted T cell immunotherapeutic ATIR101", "Allodepleted T Cell Immunotherapeutic ATIR101"], "types": ["Cell", "AnatomicalEntity", "PhysicalEssence", "OrganismalEntity", "SubjectOfInvestigation", "BiologicalEntity", "ThingWithTaxon", "NamedThing", "Entity", "PhysicalEssenceOrOccurrent"], "preferred_name": "Allodepleted T Cell Immunotherapeutic ATIR101", "shortest_name_length": 7}
+
         # Stream the file
         # tqdm(os.listdir(synonym_dir), desc="Processing files")
-        for chunk in tqdm(pd.read_csv(file_path, sep='\t', header=None, chunksize=chunk_size), desc=f"Loading {filename}"):
-            curies = chunk[0].tolist()
-            labels = chunk[2].tolist()
+        # for chunk in tqdm(pd.read_csv(file_path, sep='\t', header=None, chunksize=chunk_size), desc=f"Loading {filename}"):
+        with open(file_path, 'r') as file:
+            for line in tqdm(file, desc=f"Loading {filename}"):
+                json_obj = json.loads(line)
+                curie = json_obj['curie']
+                names = json_obj['names']
+                preferred_name = json_obj['preferred_name']
 
-            # print("Generating embeddings")
-            # Generate embeddings
-            embeddings = list(flag_embeddings.embed(labels))
-            # print(f"Embeddings generated for {len(embeddings)}")
-            # print(embeddings)
-            # TODO: add other embeddings model? BioBERT?
+                if preferred_name not in names:
+                    names.append(preferred_name)
 
-            # Create points to be inserted in Qdrant
-            points = [
-                PointStruct(id=points_count + i, vector=embedding, payload={"id": curie, "label": label, "category": category})
-                for i, (curie, label, embedding) in enumerate(zip(curies, labels, embeddings))
-            ]
-            points_count += chunk_size
+                # print("Generating embeddings")
+                # Generate embeddings
+                embeddings = list(flag_embeddings.embed(labels))
+                # print(f"Embeddings generated for {len(embeddings)}")
+                # print(embeddings)
+                # TODO: add other embeddings model? BioBERT?
+
+                # Create points to be inserted in Qdrant
+                points = [
+                    PointStruct(id=points_count + i, vector=embedding, payload={
+                        "id": curie, "label": label, "category": category
+                    }) for i, (name, embedding) in enumerate(zip(names, embeddings))
+                ]
+                points_count += len(names)
 
 
-            # Insert into Qdrant
-            vectordb.upsert(
-                collection_name="concept-resolver",
-                points=points
-            )
-            # TODO: add milvus?
+                # Insert into Qdrant
+                vectordb.upsert(
+                    collection_name="concept-resolver",
+                    points=points
+                )
+                # TODO: add milvus?
 
 print("Data processing and insertion completed.")
