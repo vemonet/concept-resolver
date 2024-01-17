@@ -3,18 +3,6 @@ from typing import Any
 import pandas as pd
 import zipfile
 from io import BytesIO
-from qdrant_client import QdrantClient
-from qdrant_client.http.models import (
-    Distance,
-    FieldCondition,
-    Filter,
-    MatchText,
-    PointStruct,
-    UpdateResult,
-    VectorParams,
-    PointStruct,
-    SearchParams,
-)
 import psycopg
 from pgvector.psycopg import register_vector
 from tqdm import tqdm
@@ -59,24 +47,6 @@ class GenEmbeddings:
         # return list(self.embedding_model.embed(labels).ravel())
 
 embed_model = GenEmbeddings()
-
-# qdrant_url = "qdrant.blah.137.120.31.102.nip.io"
-# qdrant_url = "qdrant.blah.137.120.31.148.nip.io"
-# qdrant_url = "qdrant.137.120.31.148.nip.io"
-
-# vectordb = QdrantClient(
-#     host="qdrant",
-#     # port=443,
-#     # api_key="MAMAMIA",
-#     prefer_grpc=True,
-# )
-
-# vectordb.recreate_collection(
-#     collection_name="pubdictionaries-flag",
-#     vectors_config=VectorParams(size=embed_model.embedding_size, distance=Distance.COSINE),
-#     # force_recreate=True,
-# )
-
 
 def download_dict(dict_name) -> str:
     print(f"Downloading {dict_name}")
@@ -174,17 +144,6 @@ if __name__ == "__main__":
                 #             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
                 # TypeError: TextEncodeInput must be Union[TextInputSequence, Tuple[InputSequence, InputSequence]]
 
-                # TODO: get total number of lines and chunks for loading bar?
-                # with open(filename, 'r', encoding='utf-8') as file:
-                #     line_count=sum(1 for _ in file)
-                # total_chunks = (line_count // chunk_size)
-                # print(f"Downloaded {dict_name}")
-
-                # df = pd.read_csv(filename, sep='\t')
-                # total_chunks = len(df)
-                # total_chunks = estimate_total_chunks(ddl_url, chunk_size)
-
-                # for df in tqdm(pd.read_csv(filename, sep='\t', chunksize=chunk_size), desc=f"Processing {dict_name}", total=total_chunks):
                 for df in tqdm(pd.read_csv(filename, sep='\t', chunksize=chunk_size), desc=f"Processing {dict_name}"):
                     labels = df["#label"].tolist()
                     ids = df["id"].tolist()
@@ -203,16 +162,3 @@ if __name__ == "__main__":
 
                     similar = conn.execute("SELECT * FROM pubdictionaries_embeddings LIMIT 5").fetchall()
                     print(similar)
-
-                    # # Create points to be inserted in Qdrant
-                    # points = [
-                    #     PointStruct(id=points_count + i, vector=embedding, payload={"id": label_id, "label": label, "dictionary": dict_name})
-                    #     for i, (label_id, label, embedding) in enumerate(zip(ids, labels, embeddings))
-                    # ]
-                    # points_count += len(labels)
-
-                    # # Insert into Qdrant
-                    # vectordb.upsert(
-                    #     collection_name="pubdictionaries-flag",
-                    #     points=points
-                    # )

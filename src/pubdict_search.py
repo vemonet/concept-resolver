@@ -19,7 +19,7 @@ with psycopg.connect(pg_connect) as conn:
 
         # print(embeddings[0])
 
-        similar = conn.execute('SELECT * FROM pubdictionaries_embeddings ORDER BY embedding <-> %s LIMIT 5', (embeddings[0],)).fetchall()
+        similar = conn.execute('SELECT * FROM pubdictionaries_embeddings ORDER BY embedding <-> %s LIMIT 5', (embeddings,)).fetchall()
         # similar = conn.execute("SELECT * FROM pubdictionaries_embeddings LIMIT 5").fetchall()
         print(similar)
 
