@@ -1,6 +1,7 @@
 import os
 from typing import Any
 import pandas as pd
+import numpy as np
 import zipfile
 from io import BytesIO
 import psycopg
@@ -104,8 +105,8 @@ if __name__ == "__main__":
     chunk_size = 100000
     points_count = 0
 
-    # dict_names = extract_pubdictionaries(dicts_url)
-    dict_names = [ "ICD10" ]
+    dict_names = extract_pubdictionaries(dicts_url)
+    # dict_names = [ "ICD10" ]
     # dict_names = [ "PD-ORYZAGP2022" ]
 
 
@@ -150,7 +151,8 @@ if __name__ == "__main__":
                     # print(labels)
                     # print(ids)
                     embeddings = embed_model.embed(labels)
-                    # print(embeddings)
+                    # print(type(embeddings))
+                    # print(type(embeddings[0]))
 
                     for label_id, label, embedding in zip(ids, labels, embeddings):
                         cursor.execute(
@@ -159,6 +161,3 @@ if __name__ == "__main__":
                         )
 
                     conn.commit()
-
-                    similar = conn.execute("SELECT * FROM pubdictionaries_embeddings LIMIT 5").fetchall()
-                    print(similar)
