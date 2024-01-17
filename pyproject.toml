@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+version = "0.0.1"
+requires-python = ">=3.9"
+name = "pubdictionaries-similarity"
+readme = "README.md"
+license = { file = "LICENSE.txt" }
+authors = [
+    { name = "Vincent Emonet", email = "vincent.emonet@gmail.com" },
+]
+maintainers = [
+    { name = "Vincent Emonet", email = "vincent.emonet@gmail.com" },
+]
+keywords = [
+    "Python",
+]
+
+dependencies = [
+    "pandas",
+    "fastembed",
+    "qdrant-client",
+    "tqdm",
+    "beautifulsoup4",
+    "requests",
+    "psycopg[binary,pool]",
+    "pgvector",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

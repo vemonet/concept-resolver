@@ -2,3 +2,4 @@ data/
 .venv/
 local_cache/
 nohup.out
+__pycache__

@@ -4,3 +4,5 @@ qdrant-client
 tqdm
 beautifulsoup4
 requests
+psycopg[binary,pool]
+pgvector
