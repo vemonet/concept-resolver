@@ -1,7 +1,10 @@
-from fastapi import FastAPI, File, UploadFile, Form, Depends, HTTPException
+from fastapi import FastAPI, File, UploadFile, Form, Depends, HTTPException, Body, Query
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, conint
 from typing import Dict, List, Union, Annotated
+from starlette.middleware.cors import CORSMiddleware
+from fastembed.embedding import FlagEmbedding as Embedding
+from qdrant_client import QdrantClient
 
 
 app = FastAPI(
@@ -29,6 +32,15 @@ vectordb = QdrantClient(
     host="qdrant",
     prefer_grpc=True,
 )
+
+
+class LookupResult(BaseModel):
+    curie:str
+    label: str
+    synonyms: List[str]
+    types: List[str]
+    score: float
+
 
 @app.get(
     "/lookup",
@@ -192,22 +204,17 @@ async def lookup(
     # Deduplicate match on the same ID
     seen_ids = set()
     new_list = []
-    for obj in list_of_objects:
-        id_ = obj.get("id")
+    for obj in hits:
+        id_ = obj.payload["id"]
         if id_ not in seen_ids:
             seen_ids.add(id_)
-            del obj["embedded_label"]
-            new_list.append(obj)
-
+            if "embedded_label" in obj.payload:
+                del obj.payload["embedded_label"]
+            obj.payload["score"] = obj.score
+            new_list.append(obj.payload)
+    print(new_list)
     return new_list
 
-
-class LookupResult(BaseModel):
-    curie:str
-    label: str
-    synonyms: List[str]
-    types: List[str]
-    score: float
 
 
 @app.get("/", include_in_schema=False)

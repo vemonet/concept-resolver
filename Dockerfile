@@ -14,3 +14,5 @@ COPY . /app/
 RUN pip install -e .
 
 ENV PYTHONPATH=/app
+ENV MODULE_NAME=src.api
+# ENV VARIABLE_NAME=app
