@@ -64,6 +64,8 @@ Existing benchmarks for Vector databases:
 
 ##### Biomedical data Benchmark
 
+* NCBI Disease corpus: https://www.ncbi.nlm.nih.gov/CBBresearch/Dogan/DISEASE/
+* Bacteria Biotope 4: https://sites.google.com/view/bb-2019/dataset
 * BioWiC: An Evaluation Benchmark for Biomedical Concept Representation
     * https://github.com/hrouhizadeh/BioWiC
     * https://huggingface.co/datasets/hrouhizadeh/BioWiC
@@ -89,7 +91,7 @@ Existing benchmarks for Vector databases:
 Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
 Start services:
@@ -104,8 +106,6 @@ Run loading (automatically download synonyms if not present):
 make load
 ```
 
-# PubDictionaries
+### Current limitations
 
-synonyms expansion: load all dictionaries in a vectordb
-
-For annotations: use embedding distance
+Current self-hosted vector database don't support multiple vectors for a single point. Which forces us to create different point for the different synonyms, and requires deduplication of the results when lookup.

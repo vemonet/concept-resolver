@@ -10,4 +10,4 @@ data/synonyms:
 # Load files in vector db
 .PHONY: load
 load: data/synonyms
-	python3 src/load.py
+	python3 src/babel_load.py

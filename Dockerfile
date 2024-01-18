@@ -1,13 +1,16 @@
-FROM python:3.11
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
 
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED='1'
+
 RUN pip install --upgrade pip
 
-ADD requirements.txt .
-
+COPY requirements.txt ./
 RUN pip install -r requirements.txt
 
-# Let the container hangs so we can access it using VSCode Remote Explorer
-# And run scripts from within the container
-ENTRYPOINT [ "tail", "-f", "/dev/null" ]
+COPY . /app/
+
+RUN pip install -e .
+
+ENV PYTHONPATH=/app

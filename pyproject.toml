@@ -27,6 +27,7 @@ dependencies = [
     "requests",
     "psycopg[binary,pool]",
     "pgvector",
+    "fastapi",
 ]
 
 [tool.hatch.build.targets.wheel]
