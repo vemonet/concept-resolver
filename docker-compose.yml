@@ -46,6 +46,7 @@ services:
 
   workspace:
     build: .
+    entrypoint: /start-reload.sh
     volumes:
       - .:/app
     environment:

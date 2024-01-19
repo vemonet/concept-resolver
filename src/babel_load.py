@@ -86,12 +86,13 @@ for filename in os.listdir(synonym_dir):
                     # Process the chunk
                     labels = [item[1] for item in chunk_data]
                     embeddings = list(flag_embeddings.embed(labels))
+
                     points = [
                         PointStruct(
                             id=points_count + i,
                             vector=embedding,
                             payload={
-                                "id": chunk_data[i][0],
+                                "curie": chunk_data[i][0],
                                 "label": chunk_data[i][3],
                                 "synonyms": chunk_data[i][4],
                                 "types": chunk_data[i][2],
@@ -105,6 +106,7 @@ for filename in os.listdir(synonym_dir):
                     chunk_data = []  # Reset the chunk data
 
         # Process any remaining data in the chunk
+        # TODO: make this a function to avoid repetition
         if chunk_data:
             labels = [item[1] for item in chunk_data]
             embeddings = list(flag_embeddings.embed(labels))
@@ -113,7 +115,7 @@ for filename in os.listdir(synonym_dir):
                     id=points_count + i,
                     vector=embedding,
                     payload={
-                        "id": chunk_data[i][0],
+                        "curie": chunk_data[i][0],
                         "label": chunk_data[i][3],
                         "synonyms": chunk_data[i][4],
                         "types": chunk_data[i][2],

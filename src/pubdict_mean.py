@@ -24,3 +24,4 @@ with psycopg.connect(pg_connect) as conn:
 
         mean_vector = np.mean(np.array(vectors), axis=0)
         print(mean_vector)
+

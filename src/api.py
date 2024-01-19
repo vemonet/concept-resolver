@@ -204,15 +204,15 @@ async def lookup(
     # Deduplicate match on the same ID
     seen_ids = set()
     new_list = []
-    for obj in hits:
-        id_ = obj.payload["id"]
-        if id_ not in seen_ids:
-            seen_ids.add(id_)
-            if "embedded_label" in obj.payload:
-                del obj.payload["embedded_label"]
-            obj.payload["score"] = obj.score
-            new_list.append(obj.payload)
-    print(new_list)
+    for hit in hits:
+        curie = hit.payload["curie"]
+        if curie not in seen_ids:
+            seen_ids.add(curie)
+            if "embedded_label" in hit.payload:
+                del hit.payload["embedded_label"]
+            hit.payload["score"] = hit.score
+            new_list.append(hit.payload)
+    # print(new_list)
     return new_list
 
 
