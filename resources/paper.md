@@ -4,14 +4,20 @@ title_short: 'A name resolution service for biomedical concepts using vector dat
 tags:
   - biomedical concepts
   - normalization
+  - embedding-based similarity search
 authors:
   - name: Vincent Emonet
     orcid: 0000-0002-1501-1082
     affiliation: 1
+  - name: Jin-Dong Kim
+    orcid: 0000-0002-8877-3248
+    affiliation: 2
 
 affiliations:
   - name: Department of Advanced Computing Sciences, Maastricht University, The Netherlands
     index: 1
+  - name: Database Center for Life Science, University of Tokyo, Japan
+    index: 2
 
 date: 19 January 2024
 cito-bibliography: paper.bib
