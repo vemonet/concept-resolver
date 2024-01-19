@@ -86,6 +86,8 @@ Existing benchmarks for Vector databases:
 * "alzheimer" gives "Alzheimer Vaccines" before "Alzheimer disease"
 * "COAGULASE NEGATIVE STAPHYLOCOCCUS" hangs
 
+Preliminary results on the 19/01/2024 (Babel synonyms not fully loaded yet, missing files after Drug: gene, protein, organisms, pathway, umls): most issues seems to be resolved apart from "Rat" and "acp-044 dose a" (does not time out but no interesting results)
+
 ### Run the project
 
 Start services:
@@ -115,3 +117,5 @@ Current self-hosted vector database don't support multiple vectors for a single 
 Possible solution would be to use postgres and pgvector, with 2 tables (one for embeddings, one for concept infos) but that would make the system much more complex than a JSON store.
 
 Is there any self-hosted vectordb that can support multiple unnamed vectors for a single point? (Qdrant currently only supports multiple named vectors which does not fit our use-case)
+
+http://preview.biohackrxiv.org/
