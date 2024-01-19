@@ -39,7 +39,7 @@ Resolving concept labels to standardized identifiers from existing databases is 
 
 # Discussion
 
-We propose to explore the use of vector similarity search to improve the accuracy of concept resolution. We will leverage the extensive dataset gathered by the [Translator Babel project](https://github.com/TranslatorSRI/Babel), which includes a vast repository of identifiers, labels, and synonyms from the biomedical domain (PubChem, CHEMBL, UniProt, MONDO, OMIM, HGNC, DrugBank, and more), for a uncompressed total size of 170G of synonyms in the JSONL format.
+We propose to explore the use of vector similarity search to improve the accuracy of concept resolution. We will leverage the extensive dataset gathered by the [Translator Babel project](https://github.com/TranslatorSRI/Babel), which includes a vast repository of identifiers, labels, and synonyms from the biomedical domain (PubChem, CHEMBL, UniProt, MONDO, OMIM, HGNC, DrugBank, and more), for a uncompressed total size of 170G of synonyms in the JSONL format. We will compare the results to results from the Translator Name Resolution service, which uses solr full-text search with the Babel synonym dataset.
 
 ## Vector database
 
