@@ -118,4 +118,12 @@ Possible solution would be to use postgres and pgvector, with 2 tables (one for 
 
 Is there any self-hosted vectordb that can support multiple unnamed vectors for a single point? (Qdrant currently only supports multiple named vectors which does not fit our use-case)
 
+## Documents
+
+Introduction presentation: https://docs.google.com/presentation/d/1_nTMF-ltHvYbbvfUSDxSdBEb0Wm_yr_BvNNt-IvLKtc/edit
+
+PubDictionaries experiment: https://docs.google.com/document/d/1nipvy2ZhZedmf5bjcUzcbGZIfN22V9KpZfO4eTXL89M/edit
+
+Conclusion presentation: https://docs.google.com/presentation/d/1sJeuo4oegNmaMTrvCAWb0TZJZR9SGnYH-EFwTjf99lg/edit
+
 http://preview.biohackrxiv.org/

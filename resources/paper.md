@@ -25,7 +25,7 @@ event: BLAH8
 biohackathon_name: "Biomedical Linked Annotation Hackathon 8"
 biohackathon_url:   "https://blah8.linkedannotation.org/"
 biohackathon_location: "Chiba, Japan, 2024"
-# group: Project 35
+group: Project 2
 # URL to project git repo --- should contain the actual paper.md:
 git_url: https://github.com/vemonet/concept-resolver
 # This is the short authors description that is used at the
