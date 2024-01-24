@@ -129,3 +129,5 @@ PubDictionaries experiment: https://docs.google.com/document/d/1nipvy2ZhZedmf5bj
 Conclusion presentation: https://docs.google.com/presentation/d/1sJeuo4oegNmaMTrvCAWb0TZJZR9SGnYH-EFwTjf99lg/edit
 
 Preprint biohackrxiv paper: http://preview.biohackrxiv.org/papers/bdda0f94-f526-4f35-8768-8faf62d731fa/paper.pdf
+
+Demo API: https://concept-resolver.137.120.31.102.nip.io
