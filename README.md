@@ -73,7 +73,6 @@ Existing benchmarks for Vector databases:
 
 ##### Mapping issues in Name Resolution service
 
-* "Fluphenazine Decanoate Injectio, USP" should match `UMLS:C2355623` before `UMLS:C0573089` (overdose)
 * https://github.com/TranslatorSRI/NameResolution/issues/81
     * "ischemic fasciitis"
     * "ischemic disease"
@@ -112,11 +111,14 @@ python src/pubdict_load.py
 
 ### Current limitations
 
-Current self-hosted vector database don't support multiple vectors for a single point. Which forces us to create different points for the different synonyms, and requires deduplication of the results when lookup. Which prevent us to properly use the `limit`feature from the vectordb (if the 2 first results from the vectordb are from the same point, then we will return only 1 results, which will not match the limit of 2 asked by the user)
+1. Current self-hosted vector database don't support multiple vectors for a single point. Which forces us to create different points for the different synonyms, and requires deduplication of the results when lookup. Which prevent us to properly use the `limit`feature from the vectordb (if the 2 first results from the vectordb are from the same point, then we will return only 1 results, which will not match the limit of 2 asked by the user)
 
 Possible solution would be to use postgres and pgvector, with 2 tables (one for embeddings, one for concept infos) but that would make the system much more complex than a JSON store.
 
 Is there any self-hosted vectordb that can support multiple unnamed vectors for a single point? (Qdrant currently only supports multiple named vectors which does not fit our use-case)
+
+2. For really large datasets such as the Babel synonym dataset embedding can be quite CPU intensive. It took us ~18 weeks of CPU time to index 14 millions labels.
+3. To match the original NameResolution functionalities more work will need to be done to improve the order of the results (prefLabel matches should be more important than matches on synonyms, preference by prefix/biolink types, etc)
 
 ## Documents
 
@@ -126,4 +128,4 @@ PubDictionaries experiment: https://docs.google.com/document/d/1nipvy2ZhZedmf5bj
 
 Conclusion presentation: https://docs.google.com/presentation/d/1sJeuo4oegNmaMTrvCAWb0TZJZR9SGnYH-EFwTjf99lg/edit
 
-http://preview.biohackrxiv.org/
+Preprint biohackrxiv paper: http://preview.biohackrxiv.org/papers/bdda0f94-f526-4f35-8768-8faf62d731fa/paper.pdf

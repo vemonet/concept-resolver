@@ -49,7 +49,7 @@ We also experimented with the pgvector extension for PostgreSQL databases, which
 
 ## Embeddings model
 
-For embedding the Babel synonyms dataset, we selected the small english version v1.5 of the Flag Embeddings model (`BAAI/bge-small-en-v1.5`) [@bge_embedding]. We chose this embedding model because it is the small model that ranks the best on the [Massive Text Embedding Benchmark](https://huggingface.co/spaces/mteb/leaderboard) (MTEB) [@muennighoff2022mteb], and it has been well optimized to run on CPU.
+For embedding the Babel synonyms dataset, we selected the small english version v1.5 of the Flag Embeddings model (`BAAI/bge-small-en-v1.5`) [@bge_embedding]. We chose this embedding model because it is the small model that ranks the best on the [Massive Text Embedding Benchmark](https://huggingface.co/spaces/mteb/leaderboard) (MTEB) [@muennighoff2022mteb], and it has been optimized to run on CPU in the [`fastembed`](https://github.com/qdrant/fastembed) library.
 
 ## Results
 
@@ -76,7 +76,7 @@ Our findings underscore the efficacy of vector-based similarity search  systems 
 
 # Future work
 
-* Improve the API to support most features from the original API (e.g. filtering by type)
+* Improve the API to support most features from the original API, e.g. filtering by type, preferring matches on preferred label over synonyms...
 * Setup a benchmarking workflow using a concept normalization dataset, such as the NCBI disease corpus [@Dogan2014-rh]
 * Evaluate the efficiency of various embeddings model, such as the AnglE text embeddings model [@li2023angle] or BioBERT [@lee2019biobert]
 
